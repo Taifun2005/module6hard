@@ -59,6 +59,8 @@ class Cube(Figure):     #Фигура КУБ
 
     def get_volume(self):
         return self.sides ** 3
+
+
 circle1 = Circle((200, 200, 100), 10) # (Цвет, стороны)
 cube1 = Cube((222, 35, 130), 6)
 
