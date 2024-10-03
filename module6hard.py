@@ -18,18 +18,8 @@ class Figure:      #Фигура
         if self.__is_valid_color(r, g, b):
             self.__color = [r, g, b]
 
-    # def __is_valid_sides(self, *new_sides):
-    #     return len(new_sides) == self.sides_count and all(isinstance(side, int) and side > 0 for side in new_sides)
-
     def __is_valid_sides(self, *sides):
         return len(sides) == self.sides_count and all(isinstance(side, int) and side > 0 for side in sides)
-
-        # def __is_valid_sides(self, *sides):
-    #     is_valid_count = len(sides) == self.sides_count
-    #     return is_valid_count
-
-
-
 
     def get_sides(self):
         return self.__sides
@@ -48,10 +38,6 @@ class Circle(Figure):        #Фигура КРУГ
         super().__init__(color, [sides])
         self.__radius = sides / (2 * 3.14)
 
-    # def get_square(self):
-    #     s = self.__len__() / 2
-    #     return sqrt(s * (s - self.__sides[0]) * (s - self.__sides[1]) * (s - self.__sides[2]))
-
     def get_square(self):
        return 3.14 * self.__radius ** 2
 
@@ -62,7 +48,7 @@ class Triangle(Figure):      #Фигура ТРЕУГОЛЬНИК
     def __init__(self, color, sides):
         super().__init__(color, sides)
 
-    def get_square(self, color, sides):
+    def get_square(self, color, __sides):
         s = (self.__len__() / 2)
         return sqrt(s(s - self.__sides[0])(s - self.__sides[1])(s - self.__sides[2]))
 
@@ -74,7 +60,7 @@ class Cube(Figure):     #Фигура КУБ
 
 
     def get_volume(self):
-        return self.__sides[0] ** 3
+        return self.get_sides()[0] ** 3
 
 
 circle1 = Circle((200, 200, 100), 10) # (Цвет, стороны)
