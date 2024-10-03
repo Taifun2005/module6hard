@@ -1,6 +1,9 @@
+from math import sqrt
+
 class Figure:      #Фигура
     sides_count = 0
     def __init__(self, color, sides):
+        self.sides_count = self.__class__.sides_count
         self.__sides = sides if self.__is_valid_sides(*sides) else [1] * self.sides_count  #(список сторон(целые числа))
         self.__color = color if self.__is_valid_color(*color) else [0, 0, 0]    #(список цветов в формате RGB)
         self.filled = False      #(закрашенный, bool)
@@ -9,16 +12,24 @@ class Figure:      #Фигура
         return self.__color
 
     def __is_valid_color(self, r, g, b):    #проверяет корректность переданных значений перед установкой нового цвета.
-        if 0 <= r <= 255 or 0 <= g <= 255 or 0 <= b <= 255:
-            return True
+        return 0 <= r <= 255 and 0 <= g <= 255 and 0 <= b <= 255
 
     def set_color(self, r, g, b):   #изменяет атрибут __color на соответствующие значения
         if self.__is_valid_color(r, g, b):
             self.__color = [r, g, b]
 
+    # def __is_valid_sides(self, *new_sides):
+    #     return len(new_sides) == self.sides_count and all(isinstance(side, int) and side > 0 for side in new_sides)
+
     def __is_valid_sides(self, *sides):
-        is_valid_count = len(sides) == self.sides_count
-        return is_valid_count
+        return len(sides) == self.sides_count and all(isinstance(side, int) and side > 0 for side in sides)
+
+        # def __is_valid_sides(self, *sides):
+    #     is_valid_count = len(sides) == self.sides_count
+    #     return is_valid_count
+
+
+
 
     def get_sides(self):
         return self.__sides
@@ -34,11 +45,15 @@ class Circle(Figure):        #Фигура КРУГ
     sides_count = 1
 
     def __init__(self, color, sides):
-        super().__init__(color, sides)
+        super().__init__(color, [sides])
         self.__radius = sides / (2 * 3.14)
 
+    # def get_square(self):
+    #     s = self.__len__() / 2
+    #     return sqrt(s * (s - self.__sides[0]) * (s - self.__sides[1]) * (s - self.__sides[2]))
+
     def get_square(self):
-       return 3.14 * self.__radius * 2
+       return 3.14 * self.__radius ** 2
 
 
 class Triangle(Figure):      #Фигура ТРЕУГОЛЬНИК
@@ -53,12 +68,13 @@ class Triangle(Figure):      #Фигура ТРЕУГОЛЬНИК
 
 class Cube(Figure):     #Фигура КУБ
     sides_count = 12
+
     def __init__(self, color, sides):
-        super().__init__(color, sides)
-        self.__sides = [sides] ** 12
+        super().__init__(color, [sides] * 12)
+
 
     def get_volume(self):
-        return self.sides ** 3
+        return self.__sides[0] ** 3
 
 
 circle1 = Circle((200, 200, 100), 10) # (Цвет, стороны)
